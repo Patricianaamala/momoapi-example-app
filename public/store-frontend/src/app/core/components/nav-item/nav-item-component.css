@@ -1,0 +1,22 @@
+.hint {
+  color: rgba(0, 0, 0, 0.54);
+}
+
+:host a.mat-list-item {
+  height: auto;
+  padding: 10px 0;
+}
+
+:host a.mat-list-item.active-link {
+  font-size: 26px;
+  font-weight: 200;
+}
+
+:host span.mat-line {
+  white-space: normal;
+}
+
+:host span.mat-line.hint {
+  padding-top: 5px;
+  font-size: 13px;
+}

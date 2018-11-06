@@ -1,0 +1,11 @@
+<app-one-layout>
+  <app-sidenav>
+    <app-nav-item *ngFor="let page of pages" [routerLink]="page.path" [hint]="page.hint">
+      <span>
+        {{ page.label }}
+      </span>
+    </app-nav-item>
+  </app-sidenav>
+  <ng-content></ng-content>
+
+</app-one-layout>

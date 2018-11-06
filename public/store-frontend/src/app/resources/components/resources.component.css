@@ -1,0 +1,40 @@
+:host {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-start;
+  background-color: #DDD;
+  overflow: auto;
+}
+
+mat-card.dashboard {
+  flex: 1;
+  margin: 20px 20px 20px 20px;
+}
+
+mat-card.dashboard /deep/ .mat-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+mat-card.dashboard /deep/ .mat-card-content>.title-wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin-right: -24px;
+  padding-bottom: 10px;
+  padding-right: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+mat-card.dashboard /deep/ .mat-card-content>.title-wrapper>.title {
+  font-size: 140%;
+  font-weight: bold;
+}
+
+mat-card.dashboard /deep/ .mat-card-content>.title-wrapper>.link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
