@@ -45,3 +45,9 @@ https.get(url, res => {
     );
   });
 });
+
+// MoMo API Examples:
+// POST - /requestopay
+// GET - /requestopay/{referenceid}
+// POST - /Token
+// GET - /v1_0/account/balance
