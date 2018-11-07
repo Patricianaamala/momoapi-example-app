@@ -1,54 +1,50 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { HttpClientModule } from "@angular/common/http";
-import { BrowserModule } from "@angular/platform-browser";
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-
-import { StoreModule } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-import {
-  StoreRouterConnectingModule,
-  RouterStateSerializer
-} from "@ngrx/router-store";
-import { StoreDevtoolsModule } from "@ngrx/store-devtools";
-
-import { CoreModule } from "./core/core.module";
-import { ResultsModule } from "./results/results.module";
-import { ResourcesModule } from "./resources/resources.module";
-
-import { reducers, metaReducers } from "./reducers";
-
-import { AppComponent } from "./core/containers/app.component";
-import { environment } from "../environments/environment";
-import { AppRoutesModule } from "./app-routes.module";
-import { MaterialModule } from "./material";
-import { FlexLayoutModule } from "@angular/flex-layout";
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {APP_CONFIG, AppConfig} from './config/app.config';
+import {AppRoutingModule} from './app-routing.module';
+import {CoreModule} from './core/core.module';
+import {AppComponent} from './app.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
+import {ProgressInterceptor} from './shared/interceptors/progress.interceptor';
+import {TimingInterceptor} from './shared/interceptors/timing.interceptor';
+import {NgxExampleLibraryModule} from '@ismaestro/ngx-example-library';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import {ProgressBarService} from './core/services/progress-bar.service';
+import {WebpackTranslateLoader} from './webpack-translate-loader';
 
 @NgModule({
-  declarations: [],
   imports: [
-    CommonModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
     BrowserModule,
-    AppRoutesModule,
-    StoreModule.forRoot(reducers, { metaReducers }),
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('/ngsw-worker.js', {enabled: environment.production}),
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useClass: WebpackTranslateLoader
+      }
+    }),
+    NgxExampleLibraryModule.forRoot({
+      config: {
+        say: 'hello'
+      }
+    }),
     CoreModule,
-    MaterialModule,
-    FlexLayoutModule,
-    ResultsModule,
-    ResourcesModule,
-    StoreRouterConnectingModule.forRoot({
-      stateKey: "router"
-    }),
-
-    StoreDevtoolsModule.instrument({
-      name: "MOMO Store",
-      logOnly: environment.production
-    }),
-    EffectsModule.forRoot([])
+    AppRoutingModule
   ],
-  providers: [],
+  declarations: [
+    AppComponent
+  ],
+  providers: [
+    {provide: APP_CONFIG, useValue: AppConfig},
+    {provide: HTTP_INTERCEPTORS, useClass: ProgressInterceptor, multi: true, deps: [ProgressBarService]},
+    {provide: HTTP_INTERCEPTORS, useClass: TimingInterceptor, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+
+export class AppModule {
+}

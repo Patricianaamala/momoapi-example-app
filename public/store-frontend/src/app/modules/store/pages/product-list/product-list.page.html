@@ -1,0 +1,18 @@
+<div>
+  <h2 class="header__title">Awesome Products Listing</h2>
+  <div>
+    <mat-progress-spinner *ngIf="!products" class="progress__spinner" [color]="'primary'" [mode]="'indeterminate'">
+    </mat-progress-spinner>
+
+
+
+    <mat-grid-list [cols]="cols | async" rowHeight="7:9">
+      <div *ngFor="let product of products">
+
+        <mat-grid-tile>
+          <app-product-component [product]="product"></app-product-component>
+        </mat-grid-tile>
+
+      </div>
+    </mat-grid-list>
+    <div class="clear"></div>
