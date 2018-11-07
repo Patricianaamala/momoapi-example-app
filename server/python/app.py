@@ -1,4 +1,5 @@
 import os
+import json
 from flask import Flask, render_template, jsonify, request, send_from_directory
 app = Flask(__name__)
 import inventory
@@ -38,7 +39,7 @@ def serve_image(path):
 
 @app.route('/products', methods=['GET'])
 def get_products():
-    return jsonify(inventory.products.values())
+    return jsonify(list(inventory.products.values()))
 
 
 @app.route('/products/<string:product_id>', methods=['GET'])
