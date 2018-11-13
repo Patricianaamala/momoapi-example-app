@@ -10,8 +10,8 @@ export const AppConfig: IAppConfig = {
     error404: "404"
   },
   endpoints: {
-    products: "https://nodejs-example-app.herokuapp.com/heroes"
+    products: "http://127.0.0.1:5000/products"
   },
   snackBarDuration: 3000,
-  repositoryURL: "https://github.com/ismaestro/angular6-example-app"
+  repositoryURL: "https://github.com/sparkplug/momoapi-example-app"
 };

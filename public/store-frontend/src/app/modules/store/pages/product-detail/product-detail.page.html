@@ -1,14 +1,33 @@
-<h1 class="header__title">Confirm Order</h1>
-<form class="form">
-  <mat-form-field class="example-full-width">
-    <input matInput placeholder="Favorite food" value="Sushi">
-  </mat-form-field>
-
-  <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Leave a comment"></textarea>
-  </mat-form-field>
-</form>
-
-<button mat-raised-button type="button" (click)="goBack()">
-  {{'goBack' | translate | uppercase}}
-</button>
+<mat-horizontal-stepper linear #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Place Your Order</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" [optional]="isOptional">
+    <form [formGroup]="secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <input matInput placeholder="Address" formControlName="secondCtrl" required>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    You are now done.
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>
