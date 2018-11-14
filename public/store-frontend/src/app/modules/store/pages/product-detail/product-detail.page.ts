@@ -4,6 +4,7 @@ import { Location } from "@angular/common";
 import { AppConfig } from "../../../../config/app.config";
 import { Product } from "../../shared/product.model";
 import { StoreService } from "../../shared/store.service";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-product-detail",
@@ -11,42 +12,35 @@ import { StoreService } from "../../shared/store.service";
   styleUrls: ["./product-detail.page.scss"]
 })
 export class ProductDetailPage implements OnInit {
-  hero: Product;
+  product: Product;
   canVote: boolean;
+  firstFormGroup: FormGroup;
+  secondFormGroup: FormGroup;
+  isOptional = false;
 
   constructor(
-    private heroService: StoreService,
+    private storeService: StoreService,
     private location: Location,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private _formBuilder: FormBuilder
   ) {}
 
   ngOnInit() {
-    const heroId = this.activatedRoute.snapshot.paramMap.get("id");
-    this.heroService.getHeroById(heroId).subscribe((hero: Product) => {
-      this.hero = hero;
+    const pId = this.activatedRoute.snapshot.paramMap.get("id");
+    this.storeService.getHeroById(pId).subscribe((product: Product) => {
+      this.product = product;
     });
-  }
 
-  dynamicImport() {
-    import("html2canvas").then((html2canvas: any) => {
-      html2canvas
-        .default(document.getElementById("heroe-detail"))
-        .then(canvas => {
-          window
-            .open()
-            .document.write('<img src="' + canvas.toDataURL() + '" />');
-        });
+    this.firstFormGroup = this._formBuilder.group({
+      firstCtrl: ["", Validators.required]
+    });
+    this.secondFormGroup = this._formBuilder.group({
+      secondCtrl: ""
     });
   }
 
   goBack(): void {
     this.location.back();
-  }
-
-  goToTheAnchor(): void {
-    this.router.navigate([`/${AppConfig.routes.heroes}/${this.hero.id}`], {
-      fragment: "heroe-detail"
-    });
   }
 }

@@ -9,6 +9,8 @@ import {
 import { Product } from "../../shared/product.model";
 import { ProductDetailPage } from "../product-detail/product-detail.page";
 import { MatDialog } from "@angular/material";
+import { Router } from "@angular/router";
+import { AppConfig } from "../../../../config/app.config";
 
 @Component({
   selector: "app-product-component",
@@ -22,17 +24,9 @@ export class ProductComponent implements OnInit {
 
   ngOnInit() {}
 
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(ProductDetailPage, {
-      width: "250px",
-      data: { product: this.product }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log("The dialog was closed");
-      this.product = result;
-    });
+  openDetails(): void {
+    this.router.navigate([`/${AppConfig.routes.products}/${this.product.id}`]);
   }
 }

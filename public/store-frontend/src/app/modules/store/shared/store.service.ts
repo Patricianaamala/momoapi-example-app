@@ -52,7 +52,10 @@ export class StoreService {
     return;
   }
 
-  getHeroById(id: string): Observable<Product> {
-    return;
+  getHeroById(id: string): Observable<Product | {}> {
+    return this.http.get<Product>(`${this.productsUrl}/${id}`).pipe(
+      tap(() => LoggerService.log(`fetched products`)),
+      catchError(StoreService.handleError("getProducts", {}))
+    );
   }
 }
